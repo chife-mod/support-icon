@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support Icon</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #1b1c21;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .support-pill {
+            width: 48px;
+            height: 90px;
+            transform: scale(2);
+            border-radius: 500px;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            padding: 4px;
+            gap: 2px;
+        }
+
+        /* ── Glow effects ── */
+        .glow {
+            position: absolute;
+            width: 81.5px;
+            height: 81.5px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.12s cubic-bezier(0.4, 0, 1, 1);
+            z-index: 0;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .glow--blue {
+            top: 24px;
+        }
+
+        .glow--color {
+            top: 66px;
+        }
+
+        .support-pill.is-hovering-top .glow--blue,
+        .support-pill.is-hovering-bottom .glow--color {
+            opacity: 1;
+            transition: opacity 0.3s cubic-bezier(0, 0, 0.2, 1);
+        }
+
+        /* ── Dark circle indicator ── */
+        .indicator {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            left: 4px;
+            top: 46px;
+            z-index: 1;
+            transition: top 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+        }
+
+        .indicator svg {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .indicator.at-top {
+            top: 4px;
+        }
+
+        /* ── Icon slots ── */
+        .icon-slot {
+            position: relative;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            flex-shrink: 0;
+        }
+
+        .icon-slot--chat svg {
+            width: 24px;
+            height: 24px;
+            display: block;
+        }
+
+        .icon-slot--ai svg {
+            width: 40px;
+            height: 40px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="support-pill" id="pill">
+        <!-- Glow effects -->
+        <img class="glow glow--blue" src="assets/02/Blue%20Glow%20x2.png" alt="" draggable="false">
+        <img class="glow glow--color" src="assets/02/Color%20Glow%20x2.png" alt="" draggable="false">
+
+        <!-- Dark circle indicator -->
+        <div class="indicator" id="indicator">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="20" cy="20" r="20" fill="url(#darkCircleGrad)"/>
+                <defs>
+                    <linearGradient id="darkCircleGrad" x1="20" y1="0" x2="20" y2="40" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="black"/>
+                        <stop offset="1" stop-color="black" stop-opacity="0.5"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+        </div>
+
+        <!-- Top icon: Chat -->
+        <div class="icon-slot icon-slot--chat" id="iconTop">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.9998 14.2501C11.1334 14.2509 10.2804 14.0369 9.51699 13.6274C8.75356 13.2179 8.10353 12.6255 7.625 11.9034L8.8745 11.0731C9.21655 11.5889 9.68094 12.012 10.2263 12.3047C10.7716 12.5974 11.3808 12.7506 11.9998 12.7506C12.6187 12.7506 13.2279 12.5974 13.7732 12.3047C14.3186 12.012 14.783 11.5889 15.125 11.0731L16.3745 11.9034C15.896 12.6255 15.2459 13.2179 14.4825 13.6274C13.7191 14.0369 12.8661 14.2509 11.9998 14.2501Z" fill="#00A2FF"/>
+                <path d="M13.302 22.5L12 21.75L15 16.5H19.5C19.6971 16.5003 19.8923 16.4617 20.0744 16.3864C20.2565 16.3111 20.422 16.2007 20.5613 16.0613C20.7007 15.922 20.8111 15.7565 20.8864 15.5744C20.9617 15.3923 21.0003 15.1971 21 15V4.5C21.0003 4.30293 20.9617 4.10775 20.8864 3.92562C20.8111 3.7435 20.7007 3.57803 20.5613 3.43868C20.422 3.29933 20.2565 3.18885 20.0744 3.11358C19.8923 3.0383 19.6971 2.9997 19.5 3H4.5C4.30293 2.9997 4.10775 3.0383 3.92562 3.11358C3.7435 3.18885 3.57803 3.29933 3.43868 3.43868C3.29933 3.57803 3.18885 3.7435 3.11358 3.92562C3.0383 4.10775 2.9997 4.30293 3 4.5V15C2.9997 15.1971 3.0383 15.3923 3.11358 15.5744C3.18885 15.7565 3.29933 15.922 3.43868 16.0613C3.57803 16.2007 3.7435 16.3111 3.92562 16.3864C4.10775 16.4617 4.30293 16.5003 4.5 16.5H11.25V18H4.5C3.70435 18 2.94129 17.6839 2.37868 17.1213C1.81607 16.5587 1.5 15.7956 1.5 15V4.5C1.5 3.70435 1.81607 2.94129 2.37868 2.37868C2.94129 1.81607 3.70435 1.5 4.5 1.5H19.5C20.2956 1.5 21.0587 1.81607 21.6213 2.37868C22.1839 2.94129 22.5 3.70435 22.5 4.5V15C22.5 15.7956 22.1839 16.5587 21.6213 17.1213C21.0587 17.6839 20.2956 18 19.5 18H15.8738L13.302 22.5Z" fill="#00A2FF"/>
+            </svg>
+        </div>
+
+        <!-- Bottom icon: AI/Arrows -->
+        <div class="icon-slot icon-slot--ai" id="iconBottom">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <mask id="mask0_ai" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="12" y="9" width="18" height="22">
+                    <path d="M14.6821 10.2877C14.6821 10.7891 14.2717 11.2 13.7707 11.2C13.2698 11.2 12.8594 10.7891 12.8594 10.2877C12.8594 9.7862 13.2698 9.37537 13.7707 9.37537C14.2717 9.37537 14.6821 9.7862 14.6821 10.2877Z" fill="white"/>
+                    <path d="M17.1097 10.2877C17.1097 10.7891 16.7053 11.2 16.1984 11.2C15.6914 11.2 15.287 10.7891 15.287 10.2877C15.287 9.7862 15.6974 9.37537 16.1984 9.37537C16.6993 9.37537 17.1097 9.7862 17.1097 10.2877Z" fill="white"/>
+                    <path d="M19.5525 10.2877C19.5525 10.7891 19.142 11.2 18.6411 11.2C18.1402 11.2 17.7298 10.7891 17.7298 10.2877C17.7298 9.7862 18.1402 9.37537 18.6411 9.37537C19.142 9.37537 19.5525 9.7862 19.5525 10.2877Z" fill="white"/>
+                    <path d="M17.1097 12.7224C17.1097 13.2299 16.7053 13.6347 16.1984 13.6347C15.6914 13.6347 15.287 13.2238 15.287 12.7224C15.287 12.2209 15.6974 11.8101 16.1984 11.8101C16.6993 11.8101 17.1097 12.2209 17.1097 12.7224Z" fill="white"/>
+                    <path d="M19.5525 12.7224C19.5525 13.2299 19.142 13.6347 18.6411 13.6347C18.1402 13.6347 17.7298 13.2238 17.7298 12.7224C17.7298 12.2209 18.1402 11.8101 18.6411 11.8101C19.142 11.8101 19.5525 12.2209 19.5525 12.7224Z" fill="white"/>
+                    <path d="M21.9726 12.7224C21.9726 13.2299 21.5682 13.6347 21.0612 13.6347C20.5542 13.6347 20.1499 13.2238 20.1499 12.7224C20.1499 12.2209 20.5603 11.8101 21.0612 11.8101C21.5622 11.8101 21.9726 12.2209 21.9726 12.7224Z" fill="white"/>
+                    <path d="M19.5525 15.1576C19.5525 15.6651 19.142 16.0759 18.6411 16.0759C18.1402 16.0759 17.7298 15.6651 17.7298 15.1576C17.7298 14.6501 18.1402 14.2453 18.6411 14.2453C19.142 14.2453 19.5525 14.6501 19.5525 15.1576Z" fill="white"/>
+                    <path d="M21.9726 15.1576C21.9726 15.6651 21.5682 16.0759 21.0612 16.0759C20.5542 16.0759 20.1499 15.6651 20.1499 15.1576C20.1499 14.6501 20.5603 14.2453 21.0612 14.2453C21.5622 14.2453 21.9726 14.6501 21.9726 15.1576Z" fill="white"/>
+                    <path d="M24.4077 15.1576C24.4077 15.6651 24.0034 16.0759 23.4964 16.0759C22.9894 16.0759 22.5851 15.6651 22.5851 15.1576C22.5851 14.6501 22.9955 14.2453 23.4964 14.2453C23.9973 14.2453 24.4077 14.6501 24.4077 15.1576Z" fill="white"/>
+                    <path d="M21.9726 17.5923C21.9726 18.0938 21.5682 18.5046 21.0612 18.5046C20.5542 18.5046 20.1499 18.0938 20.1499 17.5923C20.1499 17.0908 20.5603 16.68 21.0612 16.68C21.5622 16.68 21.9726 17.0908 21.9726 17.5923Z" fill="white"/>
+                    <path d="M24.4077 17.5923C24.4077 18.0938 24.0034 18.5046 23.4964 18.5046C22.9894 18.5046 22.5851 18.0938 22.5851 17.5923C22.5851 17.0908 22.9955 16.68 23.4964 16.68C23.9973 16.68 24.4077 17.0908 24.4077 17.5923Z" fill="white"/>
+                    <path d="M26.8505 17.5923C26.8505 18.0938 26.4401 18.5046 25.9391 18.5046C25.4382 18.5046 25.0278 18.0938 25.0278 17.5923C25.0278 17.0908 25.4322 16.68 25.9391 16.68C26.4461 16.68 26.8505 17.0908 26.8505 17.5923Z" fill="white"/>
+                    <path d="M21.9726 22.4617C21.9726 22.9632 21.5682 23.374 21.0612 23.374C20.5542 23.374 20.1499 22.9632 20.1499 22.4617C20.1499 21.9603 20.5603 21.5494 21.0612 21.5494C21.5622 21.5494 21.9726 21.9603 21.9726 22.4617Z" fill="white"/>
+                    <path d="M24.4077 22.4617C24.4077 22.9632 24.0034 23.374 23.4964 23.374C22.9894 23.374 22.5851 22.9632 22.5851 22.4617C22.5851 21.9603 22.9955 21.5494 23.4964 21.5494C23.9973 21.5494 24.4077 21.9603 24.4077 22.4617Z" fill="white"/>
+                    <path d="M26.8505 22.4617C26.8505 22.9632 26.4401 23.374 25.9391 23.374C25.4382 23.374 25.0278 22.9632 25.0278 22.4617C25.0278 21.9603 25.4322 21.5494 25.9391 21.5494C26.4461 21.5494 26.8505 21.9603 26.8505 22.4617Z" fill="white"/>
+                    <path d="M19.5525 24.8964C19.5525 25.3979 19.142 25.8087 18.6411 25.8087C18.1402 25.8087 17.7298 25.4039 17.7298 24.8964C17.7298 24.3889 18.1402 23.9841 18.6411 23.9841C19.142 23.9841 19.5525 24.395 19.5525 24.8964Z" fill="white"/>
+                    <path d="M24.4077 20.027C24.4077 20.5345 24.0034 20.9393 23.4964 20.9393C22.9894 20.9393 22.5851 20.5285 22.5851 20.027C22.5851 19.5255 22.9955 19.1147 23.4964 19.1147C23.9973 19.1147 24.4077 19.5195 24.4077 20.027Z" fill="white"/>
+                    <path d="M26.8505 20.027C26.8505 20.5345 26.4401 20.9393 25.9391 20.9393C25.4382 20.9393 25.0278 20.5285 25.0278 20.027C25.0278 19.5255 25.4322 19.1147 25.9391 19.1147C26.4461 19.1147 26.8505 19.5195 26.8505 20.027Z" fill="white"/>
+                    <path d="M29.2781 20.027C29.2781 20.5345 28.8677 20.9393 28.3668 20.9393C27.8658 20.9393 27.4554 20.5285 27.4554 20.027C27.4554 19.5255 27.8658 19.1147 28.3668 19.1147C28.8677 19.1147 29.2781 19.5195 29.2781 20.027Z" fill="white"/>
+                    <path d="M21.9726 24.8964C21.9726 25.3979 21.5682 25.8087 21.0612 25.8087C20.5542 25.8087 20.1499 25.4039 20.1499 24.8964C20.1499 24.3889 20.5603 23.9841 21.0612 23.9841C21.5622 23.9841 21.9726 24.395 21.9726 24.8964Z" fill="white"/>
+                    <path d="M24.4077 24.8964C24.4077 25.3979 24.0034 25.8087 23.4964 25.8087C22.9894 25.8087 22.5851 25.4039 22.5851 24.8964C22.5851 24.3889 22.9955 23.9841 23.4964 23.9841C23.9973 23.9841 24.4077 24.395 24.4077 24.8964Z" fill="white"/>
+                    <path d="M17.1097 27.3316C17.1097 27.8331 16.7053 28.2439 16.1984 28.2439C15.6914 28.2439 15.287 27.8331 15.287 27.3316C15.287 26.8302 15.6974 26.4193 16.1984 26.4193C16.6993 26.4193 17.1097 26.8302 17.1097 27.3316Z" fill="white"/>
+                    <path d="M19.5525 27.3316C19.5525 27.8331 19.142 28.2439 18.6411 28.2439C18.1402 28.2439 17.7298 27.8331 17.7298 27.3316C17.7298 26.8302 18.1402 26.4193 18.6411 26.4193C19.142 26.4193 19.5525 26.8302 19.5525 27.3316Z" fill="white"/>
+                    <path d="M21.9726 27.3316C21.9726 27.8331 21.5682 28.2439 21.0612 28.2439C20.5542 28.2439 20.1499 27.8331 20.1499 27.3316C20.1499 26.8302 20.5603 26.4193 21.0612 26.4193C21.5622 26.4193 21.9726 26.8302 21.9726 27.3316Z" fill="white"/>
+                    <path d="M14.6821 29.7659C14.6821 30.2673 14.2717 30.6782 13.7707 30.6782C13.2698 30.6782 12.8594 30.2673 12.8594 29.7659C12.8594 29.2644 13.2698 28.8536 13.7707 28.8536C14.2717 28.8536 14.6821 29.2644 14.6821 29.7659Z" fill="white"/>
+                    <path d="M17.1097 29.7659C17.1097 30.2673 16.7053 30.6782 16.1984 30.6782C15.6914 30.6782 15.287 30.2673 15.287 29.7659C15.287 29.2644 15.6974 28.8536 16.1984 28.8536C16.6993 28.8536 17.1097 29.2644 17.1097 29.7659Z" fill="white"/>
+                    <path d="M19.5525 29.7659C19.5525 30.2673 19.142 30.6782 18.6411 30.6782C18.1402 30.6782 17.7298 30.2673 17.7298 29.7659C17.7298 29.2644 18.1402 28.8536 18.6411 28.8536C19.142 28.8536 19.5525 29.2644 19.5525 29.7659Z" fill="white"/>
+                </mask>
+                <g mask="url(#mask0_ai)">
+                    <g filter="url(#filter0_ai)">
+                        <mask id="mask1_ai" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="-3" y="-3" width="43" height="43">
+                            <circle cx="18.5737" cy="18.5715" r="20.7143" fill="#3985F6"/>
+                        </mask>
+                        <g mask="url(#mask1_ai)">
+                            <g filter="url(#filter1_ai)">
+                                <circle cx="9.80975" cy="0.247252" r="12.7473" fill="#218DFA"/>
+                            </g>
+                            <g filter="url(#filter2_ai)">
+                                <circle cx="39.2863" cy="19.3682" r="12.7473" fill="#D252C6"/>
+                            </g>
+                            <g filter="url(#filter3_ai)">
+                                <circle cx="27.341" cy="36.0989" r="12.7473" fill="#FE394B"/>
+                            </g>
+                            <g filter="url(#filter4_ai)">
+                                <circle cx="11.4035" cy="35.3022" r="12.7473" fill="#FD890C"/>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+                <mask id="mask2_ai" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="1" y="1" width="38" height="38">
+                    <circle cx="20.0011" cy="20" r="17.8571" stroke="#3985F6" stroke-width="1.42857"/>
+                </mask>
+                <g mask="url(#mask2_ai)">
+                    <g filter="url(#filter5_ai)">
+                        <circle cx="12.1473" cy="3.57139" r="11.4286" fill="#218DFA"/>
+                    </g>
+                    <g filter="url(#filter6_ai)">
+                        <circle cx="38.5692" cy="20.7143" r="11.4286" fill="#D252C6"/>
+                    </g>
+                    <g filter="url(#filter7_ai)">
+                        <circle cx="27.8583" cy="35.7143" r="11.4286" fill="#FE394B"/>
+                    </g>
+                    <g filter="url(#filter8_ai)">
+                        <circle cx="13.5692" cy="35" r="11.4286" fill="#FD890C"/>
+                    </g>
+                </g>
+                <defs>
+                    <filter id="filter0_ai" x="-13.5692" y="-13.5714" width="67.1462" height="67.1429" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                        <feGaussianBlur stdDeviation="5.71429" result="effect1_foregroundBlur"/>
+                    </filter>
+                    <filter id="filter1_ai" x="-18.8716" y="-28.4341" width="57.3603" height="57.3626" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                        <feGaussianBlur stdDeviation="7.96703" result="effect1_foregroundBlur"/>
+                    </filter>
+                    <filter id="filter2_ai" x="10.605" y="-9.31309" width="57.3603" height="57.3626" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                        <feGaussianBlur stdDeviation="7.96703" result="effect1_foregroundBlur"/>
+                    </filter>
+                    <filter id="filter3_ai" x="-1.34032" y="7.41762" width="57.3603" height="57.3626" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                        <feGaussianBlur stdDeviation="7.96703" result="effect1_foregroundBlur"/>
+                    </filter>
+                    <filter id="filter4_ai" x="-17.2778" y="6.62087" width="57.3603" height="57.3626" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                        <feGaussianBlur stdDeviation="7.96703" result="effect1_foregroundBlur"/>
+                    </filter>
+                    <filter id="filter5_ai" x="-13.567" y="-22.1429" width="51.4308" height="51.4286" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                        <feGaussianBlur stdDeviation="7.14286" result="effect1_foregroundBlur"/>
+                    </filter>
+                    <filter id="filter6_ai" x="12.8549" y="-4.99995" width="51.4308" height="51.4286" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                        <feGaussianBlur stdDeviation="7.14286" result="effect1_foregroundBlur"/>
+                    </filter>
+                    <filter id="filter7_ai" x="2.14397" y="10.0001" width="51.4308" height="51.4286" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                        <feGaussianBlur stdDeviation="7.14286" result="effect1_foregroundBlur"/>
+                    </filter>
+                    <filter id="filter8_ai" x="-12.1451" y="9.2857" width="51.4308" height="51.4286" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                        <feGaussianBlur stdDeviation="7.14286" result="effect1_foregroundBlur"/>
+                    </filter>
+                </defs>
+            </svg>
+        </div>
+    </div>
+
+    <script>
+        const pill = document.getElementById('pill');
+        const iconTop = document.getElementById('iconTop');
+        const iconBottom = document.getElementById('iconBottom');
+        const indicator = document.getElementById('indicator');
+
+        let currentPosition = 'bottom';
+        let glowTimeout = null;
+
+        function setHover(position) {
+            if (glowTimeout) {
+                clearTimeout(glowTimeout);
+                glowTimeout = null;
+            }
+
+            const isSwitch = currentPosition !== position;
+            currentPosition = position;
+
+            // Move circle immediately
+            indicator.classList.toggle('at-top', position === 'top');
+
+            // Remove old glow immediately
+            pill.classList.remove('is-hovering-top', 'is-hovering-bottom');
+
+            const glowClass = 'is-hovering-' + position;
+
+            if (isSwitch) {
+                // Switching: circle moves first, glow fades in after it arrives
+                glowTimeout = setTimeout(() => {
+                    pill.classList.add(glowClass);
+                }, 320);
+            } else {
+                // Same position: glow appears instantly
+                pill.classList.add(glowClass);
+            }
+        }
+
+        iconTop.addEventListener('mouseenter', () => setHover('top'));
+        iconBottom.addEventListener('mouseenter', () => setHover('bottom'));
+
+        pill.addEventListener('mouseleave', () => {
+            if (glowTimeout) {
+                clearTimeout(glowTimeout);
+                glowTimeout = null;
+            }
+            pill.classList.remove('is-hovering-top', 'is-hovering-bottom');
+        });
+    </script>
+</body>
+</html>
